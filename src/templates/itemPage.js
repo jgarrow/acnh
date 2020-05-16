@@ -54,7 +54,7 @@ const ItemPage = ({ pageContext: { id, name }, data }) => {
               alignSelf: `flex-start`,
             }}
           >
-            Materials:{" "}
+            DIY Materials:{" "}
           </p>
           <div
             style={{
@@ -79,12 +79,12 @@ const ItemPage = ({ pageContext: { id, name }, data }) => {
         <div
           style={{
             display: `flex`,
-            width: `175px`,
+            width: `200px`,
             justifyContent: `space-between`,
             alignItems: `center`,
           }}
         >
-          <p>Source: </p>
+          <p>Recipe Source: </p>
           {recipe.source.map(source => (
             <p>{source}</p>
           ))}
