@@ -1,8 +1,15 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 
-const RecipePage = ({ pageContext: { id }, data }) => {
+import { replaceSpacesWithHyphens } from "../utils/replaceSpacesWithHyphens"
+import { capitalizeFirstLetters } from "../utils/capitalizeFirstLetters"
+
+const RecipePage = ({ pageContext: { id, name }, data }) => {
   const recipe = data.recipesJson
+  const item = data.itemsJson
+
+  const itemImage = item.variants[0].image
+
   console.log("recipe materials: ", recipe.materials)
   const materials = Object.keys(recipe.materials).filter(
     material => recipe.materials[material] !== null
@@ -24,23 +31,67 @@ const RecipePage = ({ pageContext: { id }, data }) => {
   //   console.log("mats: ", mats)
 
   return (
-    <div>
-      <h2>Recipe name: {recipe.name}</h2>
-      {materials &&
-        materials.map((material, index) => {
-          const materialName = material.replace(/_/g, " ")
-          return (
-            <p key={`${material} ${index}`}>
-              {materialName}: {recipe.materials[material]}
-            </p>
-          )
-        })}
+    <div
+      styel={{
+        width: `80%`,
+        margin: `0 auto`,
+      }}
+    >
+      <Link to={`/${replaceSpacesWithHyphens(recipe.name)}`}>
+        <h2>{capitalizeFirstLetters(recipe.name)}</h2>
+      </Link>
+      <img src={itemImage} alt={recipe.name} />
+      <div
+        style={{
+          display: `flex`,
+          width: `175px`,
+          justifyContent: `space-between`,
+          alignItems: `center`,
+        }}
+      >
+        <p
+          style={{
+            alignSelf: `flex-start`,
+          }}
+        >
+          Materials:{" "}
+        </p>
+        <div
+          style={{
+            display: `flex`,
+            flexDirection: `column`,
+          }}
+        >
+          {materials &&
+            materials.map((material, index) => {
+              const materialName = material.replace(/_/g, " ")
+              return (
+                <p key={`${material} ${index}`}>
+                  {materialName}: {recipe.materials[material]}
+                </p>
+              )
+            })}
+        </div>
+      </div>
+      <div
+        style={{
+          display: `flex`,
+          width: `175px`,
+          justifyContent: `space-between`,
+          alignItems: `center`,
+        }}
+      >
+        <p>Source: </p>
+        {recipe.source.map(source => (
+          <p>{source}</p>
+        ))}
+      </div>
     </div>
   )
 }
 
 export const data = graphql`
-  query($id: String!) {
+  query($id: String!, $name: String!) {
     recipesJson(id: { eq: $id }) {
       id
       name
@@ -212,6 +263,14 @@ export const data = graphql`
         yellow_tulips
         young_spring_bamboo
         zen_cushion
+      }
+    }
+
+    itemsJson(name: { eq: $name }) {
+      id
+      variants {
+        image
+        colors
       }
     }
   }
