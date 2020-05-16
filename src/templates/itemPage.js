@@ -1,21 +1,21 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
 
+import { replaceSpacesWithHyphens } from "../utils/replaceSpacesWithHyphens"
+import { capitalizeFirstLetters } from "../utils/capitalizeFirstLetters"
+
 const ItemPage = ({ pageContext: { id, name }, data }) => {
   const item = data.itemsJson
-  const recipe = data.recipesJson
-  const recipePath = item.name.replace(/\s+/g, "-") + "-recipe"
+  const recipePath = replaceSpacesWithHyphens(item.name) + "-recipe"
 
   const cost = item.variants[0].buy > -1 ? item.variants[0].buy : "N/A"
 
   console.log("id: ", id)
   console.log("name: ", name)
 
-  console.log("recipe: ", recipe)
-
   return (
     <div>
-      <h2>Item name: {item.name}</h2>
+      <h2>{capitalizeFirstLetters(item.name)}</h2>
       {item.variants &&
         item.variants.map(variant => (
           <img
@@ -26,6 +26,11 @@ const ItemPage = ({ pageContext: { id, name }, data }) => {
         ))}
       <p>Cost: {cost}</p>
       <p>Sell: {item.variants[0].sell}</p>
+      <p>Catalog: {item.catalog}</p>
+      {item.customizationKitCost && (
+        <p>Customization Kit Cost: {item.customizationKitCost}</p>
+      )}
+      <p>Size: {item.size}</p>
       {item.diy && <Link to={`${recipePath}`}>DIY Recipe</Link>}
     </div>
   )
