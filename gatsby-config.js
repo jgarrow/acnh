@@ -6,5 +6,18 @@
 
 module.exports = {
   /* Your site config here */
-  plugins: [],
+  siteMetadata: {
+    title: `Nook Phone`,
+    author: `Janessa Garrow`,
+    description: `A catalogue of items in Animal Crossing New Horizons`,
+  },
+  plugins: [
+    `gatsby-transformer-json`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `./src/data/`,
+      },
+    },
+  ],
 }
