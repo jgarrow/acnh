@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
 
 import { replaceSpacesWithHyphens } from "../utils/replaceSpacesWithHyphens"
 import { capitalizeFirstLetters } from "../utils/capitalizeFirstLetters"
@@ -12,15 +12,17 @@ const ItemPage = ({ pageContext: { id, name }, data }) => {
     material => recipe.materials[material] !== null
   )
 
-  const recipePath = replaceSpacesWithHyphens(item.name) + "-recipe"
-
   const cost = item.variants[0].buy > -1 ? item.variants[0].buy : "N/A"
 
   console.log("id: ", id)
   console.log("name: ", name)
 
   return (
-    <div>
+    <div
+      style={{
+        background: `#E9E2D0`,
+      }}
+    >
       <h2>{capitalizeFirstLetters(item.name)}</h2>
       {item.variants &&
         item.variants.map(variant => (

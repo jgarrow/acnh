@@ -6,6 +6,8 @@ import { replaceSpacesWithHyphens } from "../utils/replaceSpacesWithHyphens"
 const Recipes = ({ data }) => {
   const recipes = data.allRecipesJson.edges.map(({ node }) => node)
 
+  // TODO: add image for each recipe card
+
   return (
     <div
       style={{
