@@ -1,0 +1,8 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-image: url("https://stalks.io/static/dist/img/ground-triangles.9fd2f5ab.svg");
+}
