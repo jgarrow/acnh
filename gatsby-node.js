@@ -39,8 +39,28 @@ exports.createPages = async ({ actions, graphql }) => {
           }
         }
       }
+
+      allVillagersJson {
+        edges {
+          node {
+            id
+            name
+          }
+        }
+      }
     }
   `)
+
+  result.data.allVillagersJson.edges.forEach(({ node }) => {
+    createPage({
+      path: `/${node.name}`,
+      component: path.resolve(`./src/templates/villagerPage.js`),
+      context: {
+        id: node.id,
+        name: node.name,
+      },
+    })
+  })
 
   result.data.allItemsJson.edges.forEach(({ node }) => {
     const pathName = node.name.replace(/\s+/g, "-")

@@ -8,7 +8,7 @@ import Layout from "../components/layout"
 import Clock from "../components/clock"
 
 // import grassPattern from "../images/grassPattern.png"
-import cameraIcon from "../images/cameraIcon.png"
+// import cameraIcon from "../images/cameraIcon.png"
 import milesNookIcon from "../images/milesNookIcon.png"
 import earthIcon from "../images/earthIcon.png"
 import critterpedia from "../images/critterpediaIcon.png"
@@ -46,7 +46,7 @@ export default () => (
   <Layout>
     <div
       sx={{
-        bg: `#E9E2D0`,
+        bg: `primary`,
         width: `90%`,
         maxWidth: `330px`,
         height: `100%`,
@@ -134,13 +134,15 @@ export default () => (
           }}
         />
 
-        <AppIcon
-          image={villagerIcon}
-          altDesc="Image of a cat villager to represent all villagers"
-          iconStyles={{
-            background: `#F98E62`,
-          }}
-        />
+        <Link to={`/villagers`}>
+          <AppIcon
+            image={villagerIcon}
+            altDesc="Image of a cat villager to represent all villagers"
+            iconStyles={{
+              background: `#F98E62`,
+            }}
+          />
+        </Link>
         <AppIcon
           image={passportIcon}
           altDesc="Passport icon"

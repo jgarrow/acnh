@@ -5,12 +5,14 @@ import { useState, useEffect } from "react"
 const Clock = () => {
   const setTime = () => {
     const today = new Date()
-    let amOrPm = hour >= 12 ? "PM" : "AM"
+
     let hour = today.getHours()
+    let amOrPm = hour >= 12 ? "PM" : "AM"
     hour = hour % 12
     hour = hour ? hour : 12 // the hour '0' should be '12'
 
-    const minutes = today.getMinutes()
+    let minutes = today.getMinutes()
+    minutes = minutes < 10 ? `0${minutes}` : minutes
 
     return `${hour}:${minutes} ${amOrPm}`
   }

@@ -1,7 +1,8 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
 
-import { replaceSpacesWithHyphens } from "../utils/replaceSpacesWithHyphens"
+// import { replaceSpacesWithHyphens } from "../utils/replaceSpacesWithHyphens"
 import { capitalizeFirstLetters } from "../utils/capitalizeFirstLetters"
 
 const ItemPage = ({ pageContext: { id, name }, data }) => {
@@ -19,8 +20,8 @@ const ItemPage = ({ pageContext: { id, name }, data }) => {
 
   return (
     <div
-      style={{
-        background: `#E9E2D0`,
+      sx={{
+        bg: `primary`,
       }}
     >
       <h2>{capitalizeFirstLetters(item.name)}</h2>
@@ -44,7 +45,7 @@ const ItemPage = ({ pageContext: { id, name }, data }) => {
 
       {item.diy && (
         <div
-          style={{
+          sx={{
             display: `flex`,
             width: `175px`,
             justifyContent: `space-between`,
@@ -52,14 +53,14 @@ const ItemPage = ({ pageContext: { id, name }, data }) => {
           }}
         >
           <p
-            style={{
+            sx={{
               alignSelf: `flex-start`,
             }}
           >
             DIY Materials:{" "}
           </p>
           <div
-            style={{
+            sx={{
               display: `flex`,
               flexDirection: `column`,
             }}
@@ -79,7 +80,7 @@ const ItemPage = ({ pageContext: { id, name }, data }) => {
 
       {item.diy && (
         <div
-          style={{
+          sx={{
             display: `flex`,
             width: `200px`,
             justifyContent: `space-between`,

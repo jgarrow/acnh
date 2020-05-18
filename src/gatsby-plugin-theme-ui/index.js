@@ -5,5 +5,6 @@ export default {
     text: `#27453B`,
     // background: `#FDE2A8`,
     background: `#75c9b3`,
+    primary: `#E9E2D0`,
   },
 }
