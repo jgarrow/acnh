@@ -14,6 +14,7 @@ const Villagers = ({ data }) => {
   const villagers = data.allVillagersJson.edges.map(({ node }) => node)
   const [searchResults, setSearchResults] = useState([...villagers])
   const [searchInput, setSearchInput] = useState("")
+  const [sort, setSort] = useState("a-z")
   const [selectedSpecies, setSelectedSpecies] = useState([])
   const [selectedPersonalities, setSelectedPersonalities] = useState([])
   const animatedComponents = makeAnimated() // for MultiSelect animation
@@ -233,10 +234,16 @@ const Villagers = ({ data }) => {
       )
     }
 
+    if (sort === "a-z") {
+      results = results.sort()
+    } else if (sort === "z-a") {
+      results = results.sort((a, b) => (a > b ? 1 : -1))
+    }
+
     console.log("results: ", results)
 
     setSearchResults(results)
-  }, [selectedSpecies, selectedPersonalities])
+  }, [sort, selectedSpecies, selectedPersonalities])
 
   return (
     <Layout>
@@ -251,18 +258,16 @@ const Villagers = ({ data }) => {
         }}
       >
         <Box as="form">
-          {/* <Label htmlFor="sort">Sort by:</Label>
+          <Label htmlFor="sort">Sort by:</Label>
           <Select
             id="sort"
             name="sort"
-            defaultValue="a-z"
-            // value={}
-            onChange={handleChange}
+            value={sort}
+            onChange={e => setSort(e.target.value)}
           >
             <option value="a-z">A-Z</option>
             <option value="z-a">Z-A</option>
-            <option value="species">Species</option>
-          </Select> */}
+          </Select>
 
           <Label htmlFor="speciesFilter">Filter by species:</Label>
           <MultiSelect
