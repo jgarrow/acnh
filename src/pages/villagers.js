@@ -15,6 +15,7 @@ const Villagers = ({ data }) => {
   const [searchResults, setSearchResults] = useState([...villagers])
   const [searchInput, setSearchInput] = useState("")
   const [selectedSpecies, setSelectedSpecies] = useState([])
+  const [selectedPersonalities, setSelectedPersonalities] = useState([])
   const animatedComponents = makeAnimated() // for MultiSelect animation
   const speciesOptions = [
     {
@@ -160,22 +161,75 @@ const Villagers = ({ data }) => {
     },
   ]
 
+  const personalityOptions = [
+    {
+      value: `cranky`,
+      label: `Cranky`,
+    },
+    {
+      value: `jock`,
+      label: `Jock`,
+    },
+    {
+      value: `lazy`,
+      label: `Lazy`,
+    },
+    {
+      value: `smug`,
+      label: `Smug`,
+    },
+    {
+      value: `normal`,
+      label: `Normal`,
+    },
+    {
+      value: `peppy`,
+      label: `Peppy`,
+    },
+    {
+      value: `snooty`,
+      label: `Snooty`,
+    },
+    {
+      value: `big sister`,
+      label: `Big Sister`,
+    },
+  ]
   const handleSearchChange = e => {
     setSearchInput(e.target.value)
   }
 
   useEffect(() => {
+    console.log("selectedSpecies: ", selectedSpecies)
+    console.log("selectedPersonalities: ", selectedPersonalities)
     let results = [...villagers]
-    const speciesFilter = selectedSpecies.map(species => species.value)
+    const speciesFilter = selectedSpecies
+      ? selectedSpecies.map(species => species.value)
+      : []
+    const personalitiesFilter = selectedPersonalities
+      ? selectedPersonalities.map(personality => personality.value)
+      : []
 
-    if (selectedSpecies.length) {
+    if (speciesFilter.length) {
       results = [...villagers].filter(villager =>
         speciesFilter.includes(villager.species.toLowerCase())
       )
+
+      if (personalitiesFilter.length) {
+        results = results.filter(villager =>
+          personalitiesFilter.includes(villager.personality.toLowerCase())
+        )
+      }
+    } else if (personalitiesFilter.length) {
+      results = [...villagers].filter(villager =>
+        personalitiesFilter.includes(villager.personality.toLowerCase())
+      )
     }
 
+    console.log("results: ", results)
+
     setSearchResults(results)
-  }, [selectedSpecies])
+  }, [selectedSpecies, selectedPersonalities])
 
   return (
     <Layout>
@@ -203,14 +257,26 @@ const Villagers = ({ data }) => {
             <option value="species">Species</option>
           </Select> */}
 
-          <Label htmlFor="filter">Filter by:</Label>
+          <Label htmlFor="speciesFilter">Filter by species:</Label>
           <MultiSelect
+            id="speciesFilter"
             options={speciesOptions}
             isMulti={true}
             components={animatedComponents}
             value={selectedSpecies}
             onChange={newValue => setSelectedSpecies(newValue)}
           />
+
+          <Label htmlFor="personalityFilter">Filter by personality:</Label>
+          <MultiSelect
+            id="personalityFilter"
+            options={personalityOptions}
+            isMulti={true}
+            components={animatedComponents}
+            value={selectedPersonalities}
+            onChange={newValue => setSelectedPersonalities(newValue)}
+          />
+
           {/* <Select
             id="filter"
             name="filter"
