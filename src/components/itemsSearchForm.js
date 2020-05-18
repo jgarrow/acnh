@@ -4,13 +4,15 @@ import { jsx, Box, Input, Label, Select } from "theme-ui"
 import { default as MultiSelect } from "react-select"
 import makeAnimated from "react-select/animated"
 
-import { materialsOptions } from "../data/items.js"
+import { materialsOptions, customizableOptions } from "../data/items.js"
 
 const ItemsSearchForm = ({
   sort,
   setSort,
   selectedMaterials,
   setSelectedMaterials,
+  selectedCustomize,
+  setSelectedCustomize,
   searchInput,
   handleSearchChange,
 }) => {
@@ -40,6 +42,18 @@ const ItemsSearchForm = ({
         </Select>
       </div>
 
+      <div>
+        <Label htmlFor="customizeFilter">Customizable:</Label>
+        <Select
+          id="customizeFilter"
+          value={selectedCustomize}
+          onChange={e => setSelectedCustomize(e.target.value)}
+        >
+          <option value="N/A">N/A</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </Select>
+      </div>
       <div>
         <Label htmlFor="materialsFilter">Materials:</Label>
         <MultiSelect

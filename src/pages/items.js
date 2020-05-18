@@ -10,7 +10,6 @@ import { replaceSpacesWithHyphens } from "../utils/replaceSpacesWithHyphens"
 
 // TODO: add more filters
 // type of item
-// customizable
 
 const Items = ({ data }) => {
   const recipes = data.allRecipesJson.edges.map(({ node }) => node)
@@ -33,6 +32,7 @@ const Items = ({ data }) => {
   const [searchInput, setSearchInput] = useState("")
   const [sort, setSort] = useState("a-z")
   const [selectedMaterials, setSelectedMaterials] = useState([])
+  const [selectedCustomize, setSelectedCustomize] = useState("N/A")
 
   const handleSearchChange = e => {
     let results = [...items].filter(item =>
@@ -62,6 +62,16 @@ const Items = ({ data }) => {
 
         return acc
       }, [])
+
+      if (selectedCustomize === "yes") {
+        results = results.filter(item => item.customizationKitCost)
+      } else if (selectedCustomize === "no") {
+        results = results.filter(item => !item.customizationKitCost)
+      }
+    } else if (selectedCustomize === "yes") {
+      results = [...items].filter(item => item.customizationKitCost)
+    } else if (selectedCustomize === "no") {
+      results = [...items].filter(item => !item.customizationKitCost)
     }
 
     if (sort === "a-z") {
@@ -71,7 +81,7 @@ const Items = ({ data }) => {
     }
 
     setSearchResults(results)
-  }, [sort, selectedMaterials])
+  }, [sort, selectedMaterials, selectedCustomize])
 
   return (
     <Layout>
@@ -88,6 +98,8 @@ const Items = ({ data }) => {
           setSort={setSort}
           selectedMaterials={selectedMaterials}
           setSelectedMaterials={setSelectedMaterials}
+          selectedCustomize={selectedCustomize}
+          setSelectedCustomize={setSelectedCustomize}
           searchInput={searchInput}
           handleSearchChange={handleSearchChange}
         />
@@ -146,6 +158,7 @@ export const data = graphql`
         node {
           id
           name
+          customizationKitCost
           variants {
             image
           }

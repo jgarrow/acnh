@@ -1,3 +1,14 @@
+export const customizableOptions = [
+  {
+    value: `no`,
+    label: "No",
+  },
+  {
+    value: `yes`,
+    label: "Yes",
+  },
+]
+
 export const materialsOptions = [
   {
     value: `aquarius fragment`,
