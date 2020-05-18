@@ -196,7 +196,14 @@ const Villagers = ({ data }) => {
     },
   ]
   const handleSearchChange = e => {
+    let results = [...villagers].filter(villager =>
+      villager.name.toLowerCase().includes(e.target.value.toLowerCase())
+    )
+
+    console.log("e.target.value: ", e.target.value)
+    console.log("search input results: ", results)
     setSearchInput(e.target.value)
+    setSearchResults(results)
   }
 
   useEffect(() => {
